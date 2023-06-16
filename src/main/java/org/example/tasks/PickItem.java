@@ -1,51 +1,31 @@
 package org.example.tasks;
 
-import net.serenitybdd.core.Serenity;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
-import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.actions.Click;
-import net.serenitybdd.screenplay.actions.Hit;
-import net.serenitybdd.screenplay.actions.Scroll;
-import net.serenitybdd.screenplay.targets.Target;
 import net.serenitybdd.screenplay.waits.WaitUntil;
-import org.example.pageObject.DB_MainPage;
-import org.example.pageObject.LoginForm;
+import org.example.pageObject.OpenCart_MainPage;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 
 import java.util.List;
-import java.util.Random;
 
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isClickable;
-import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 import static net.thucydides.core.webdriver.ThucydidesWebDriverSupport.getDriver;
 
 public class PickItem implements Task {
     @Override
     public <T extends Actor> void performAs(T t) {
         int i = 0;
-
-        List<WebElement> listaElementos = getDriver().findElements(By.cssSelector("#root > div > div > main > div > div > ibk-business-accounts > ba-container > ibk-modal > main > ba-legal-person-container > ba-legal-person-data-step > ba-address-form > div:nth-child(2) > ibk-input-group:nth-child(1) > ibk-select > ibk-select-option"));
-
+        int cantidad = Integer.parseInt(t.recall("cantidad"));
+        List<WebElement> listaElementos = getDriver().findElements(By.cssSelector("#content > div:nth-child(3) > div > div > div:nth-child(2) > div.button-group > button:nth-child(1)"));
         for (WebElement element : listaElementos) {
             element.click();
             i++;
-            if (i == Integer.parseInt(t.recall("cantidad"))) break;
+            if (i == cantidad) break;
         }
-
-        t.attemptsTo(
-                Click.on(DB_MainPage.CART),
-                Click.on(DB_MainPage.CHECKOUT),
-                WaitUntil.the(DB_MainPage.CONTINUE,isClickable()).forNoMoreThan(20).seconds()
-        );
-
-
-
 
     }
 }
-
 
 
 //        int cantidad = t.recall("cantidad");

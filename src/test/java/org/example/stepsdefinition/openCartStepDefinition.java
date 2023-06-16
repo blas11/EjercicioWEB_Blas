@@ -2,16 +2,16 @@ package org.example.stepsdefinition;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.Before;
-import io.cucumber.java.es.Cuando;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.When;
 import io.cucumber.java.es.Dado;
-import io.cucumber.java.es.Entonces;
 import io.cucumber.java.es.Y;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
 import net.thucydides.core.annotations.Steps;
-import org.example.question.LoginSuccess;
 import org.example.question.MainPage;
+import org.example.question.MensajeConfirmacion;
 import org.example.tasks.*;
 import org.example.utils.CucumberTable;
 import org.example.utils.EnvConf;
@@ -20,8 +20,9 @@ import org.hamcrest.CoreMatchers;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorCalled;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
+import static org.hamcrest.CoreMatchers.equalTo;
 
-public class demoBlazeStepDefinition {
+public class openCartStepDefinition {
 
     @Before
     public void setTheStage(){
@@ -30,7 +31,7 @@ public class demoBlazeStepDefinition {
     @Steps
     EnvConf envConf;
 
-    @Dado("que me logueo a abstracta")
+    @Dado("^que me logueo a abstracta$")
     public void queSoyUnUsuarioRegistradoEnDemoblaze()
     {
         Actor actor =theActorCalled("Tomas");
@@ -41,36 +42,34 @@ public class demoBlazeStepDefinition {
 
     }
 
-    @Cuando("agrego {} productos de la categoria {}")
-    public void realizoUnaCompraDeCantProdsProductosEnLaCategoriaCategoria(int cantidad,String categoria) {
+
+    @When("^agrego (.*) productos de la categoria (.*)$")
+    public void agregoProductosDeLaCategoria(String cantidad, String categoria) {
         theActorInTheSpotlight().remember("cantidad",cantidad);
         theActorInTheSpotlight().remember("categoria",categoria);
         theActorInTheSpotlight().attemptsTo(new PickCategory());
         theActorInTheSpotlight().attemptsTo(new PickItem());
-
-
     }
 
-    @Y("visualizo el carrito")
-    public void visualizoElCarrito(DataTable dataTable)
+    @Y("^visualizo el carrito$")
+    public void visualizoElCarrito()
     {
-
-        CucumberTable.rememberTableValues(dataTable);
-        theActorInTheSpotlight().attemptsTo(new PlaceOrder());
-
+        theActorInTheSpotlight().attemptsTo(new Cart());
     }
-    @Y("completo el formulario")
+    @Y("completo el 'Checkout' como invitado: 'Guest Checkout'")
     public void completoElFormulario(DataTable dataTable)
     {
-
         CucumberTable.rememberTableValues(dataTable);
-        theActorInTheSpotlight().attemptsTo(new PlaceOrder());
-
+        theActorInTheSpotlight().attemptsTo(new Checkout());
+    }
+    @Y("finalizo la compra")
+    public void completoElFormulario()
+    {
+        theActorInTheSpotlight().attemptsTo(new Finalizar());
     }
 
-    @Entonces("valido que la compra se haya realizado de forma satisfactoria")
-    public void validoQueLaCompraSeHayaRealizadoDeFormaSatisfactoria()
-    {
-        theActorInTheSpotlight().attemptsTo(new ConfirmOrder());
+    @And("^visualizo la confirmación: (.*)$")
+    public void visualizoLaConfirmaciónValidacion(String mensaje) {
+        theActorInTheSpotlight().should(seeThat("El estado : ", MensajeConfirmacion.displayed(), equalTo(mensaje)));
     }
 }

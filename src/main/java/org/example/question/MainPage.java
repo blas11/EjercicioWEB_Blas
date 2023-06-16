@@ -4,8 +4,7 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
 import net.serenitybdd.screenplay.questions.Text;
 import net.serenitybdd.screenplay.waits.WaitUntil;
-import org.example.pageObject.DB_MainPage;
-import org.example.pageObject.LoginForm;
+import org.example.pageObject.OpenCart_MainPage;
 
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
@@ -16,7 +15,7 @@ public class MainPage implements Question {
     }
     @Override
     public Object answeredBy(Actor actor) {
-        WaitUntil.the(DB_MainPage.Store,isVisible()).forNoMoreThan(10).seconds();
-        return Text.of(DB_MainPage.Store).answeredBy(actor);
+        WaitUntil.the(OpenCart_MainPage.Store,isVisible()).forNoMoreThan(10).seconds();
+        return Text.of(OpenCart_MainPage.Store).answeredBy(actor);
     }
 }

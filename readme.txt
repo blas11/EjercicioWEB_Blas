@@ -9,14 +9,9 @@ Plugins:
 -Cucumber for Java
 -Gherkin
 
-
 Pasos para la ejecucion:
 -Abrir la terminal en la raiz del proyecto y ejecutar el siguiente comando :
   gradlew clean test -Denvironment=default -Dcucumber.filter.tags="@Compra"
 
-
 -Luego de la ejecucion el reporte se cuentra en esta ruta :
 target/site/serenity/index.html
-
-
-c

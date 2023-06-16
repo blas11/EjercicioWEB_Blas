@@ -7,8 +7,10 @@ Feature: Flujo de compra en demoblaze
     When agrego <cantProds> productos de la categoria <categoria>
     And visualizo el carrito
     And completo el 'Checkout' como invitado: 'Guest Checkout'
+      | FirstName | LastName | Email            | Telefono  | Company    | Address        | City | PostCode | Country | Region |
+      | Tomas     | Blas     | tblas@correo.com | 963214585 | Company123 | Jirón Peru 123 | LIMA | 150102   | Peru    | Lima   |
     Then finalizo la compra
-    And visualizo la confirmación: “Your order has been placed!”
+    And visualizo la confirmación: <validacion>
     Examples:
-      | cantProds | categoria     |
-      |           | Phones & PDAs |
+      | cantProds | categoria     | validacion                  |
+      | 2         | Phones & PDAs | Your order has been placed! |
