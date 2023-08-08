@@ -5,7 +5,6 @@ import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.waits.WaitUntil;
-import org.example.pageObject.LoginForm;
 import org.example.pageObject.OpenCart_MainPage;
 
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isClickable;
